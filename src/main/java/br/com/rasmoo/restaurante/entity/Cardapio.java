@@ -22,8 +22,14 @@ public class Cardapio {
     @ManyToOne
     private Categoria categoria;
 
-    public Cardapio() {
+    public Cardapio() {}
 
+    public Cardapio(String nome, String descricao, Boolean disponivel, BigDecimal valor, Categoria categoria) {
+        this.nome = nome;
+        this.descricao = descricao;
+        this.disponivel = disponivel;
+        this.valor = valor;
+        this.categoria = categoria;
     }
 
     public Integer getId() {
