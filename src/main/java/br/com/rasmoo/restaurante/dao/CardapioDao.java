@@ -1,38 +1,36 @@
 package br.com.rasmoo.restaurante.dao;
 
-import br.com.rasmoo.restaurante.entity.Prato;
+import br.com.rasmoo.restaurante.entity.Cardapio;
 
 import javax.persistence.EntityManager;
+import java.util.List;
 
-public class PratoDao {
+public class CardapioDao {
 
     private EntityManager entityManager;
 
-    public PratoDao(EntityManager entityManager){
+    public CardapioDao(EntityManager entityManager){
         this.entityManager = entityManager;
     }
 
-    /**
-     * Operação CRUD
-     * C = CREATE
-     * R = READ
-     * U = UPDATE
-     * D = DELETE
-     */
-
-    public void cadastrar(final Prato prato) {
-        this.entityManager.persist(prato);
+    public void cadastrar(final Cardapio cardapio) {
+        this.entityManager.persist(cardapio);
     }
 
-    public Prato consultar(final Integer id) {
-        return this.entityManager.find(Prato.class, id);
+    public Cardapio consultarPorId(final Integer id) {
+        return this.entityManager.find(Cardapio.class, id);
     }
 
-    public void atualizar(final Prato prato) {
-        this.entityManager.merge(prato);
+    public List<Cardapio> consultarTodos() {
+        String sql = "SELECT c FROM Cardapio c";
+        return this.entityManager.createQuery(sql, Cardapio.class).getResultList();
     }
 
-    public void excluir(final Prato prato) {
-        this.entityManager.remove(prato);
+    public void atualizar(final Cardapio cardapio) {
+        this.entityManager.merge(cardapio);
+    }
+
+    public void excluir(final Cardapio cardapio) {
+        this.entityManager.remove(cardapio);
     }
 }
