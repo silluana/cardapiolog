@@ -1,9 +1,8 @@
 package br.com.rasmoo.restaurante.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "clientes")
@@ -14,16 +13,20 @@ public class Cliente {
 
     private String nome;
 
-    @ManyToOne
-    private Endereco endereco;
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+    private List<Endereco> enderecoList = new ArrayList<>();
 
     public Cliente() {
     }
 
-    public Cliente(String cpf, String nome, Endereco endereco) {
+    public Cliente(String cpf, String nome) {
         this.cpf = cpf;
         this.nome = nome;
-        this.endereco = endereco;
+    }
+
+    public void addEndereco(Endereco endereco) {
+        endereco.setCliente(this);
+        this.enderecoList.add(endereco);
     }
 
     public String getCpf() {
@@ -42,12 +45,12 @@ public class Cliente {
         this.nome = nome;
     }
 
-    public String getEndereco() {
-        return endereco;
+    public List<Endereco> getEnderecoList() {
+        return enderecoList;
     }
 
-    public void setEndereco(String endereco) {
-        this.endereco = endereco;
+    public void setEnderecoList(List<Endereco> enderecoList) {
+        this.enderecoList = enderecoList;
     }
 
     @Override
@@ -55,7 +58,7 @@ public class Cliente {
         return "Cliente{" +
                 "cpf='" + cpf + '\'' +
                 ", nome='" + nome + '\'' +
-                ", cep='" + endereco + '\'' +
+                ", enderecoList=" + enderecoList +
                 '}';
     }
 }
