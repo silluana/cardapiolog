@@ -23,9 +23,6 @@ public class Cardapio {
     @ManyToOne
     private Categoria categoria;
 
-    @ManyToMany(mappedBy = "cardapioList")
-    private List<Ordem> ordemList;
-
     public Cardapio() {}
 
     public Cardapio(String nome, String descricao, Boolean disponivel, BigDecimal valor, Categoria categoria) {

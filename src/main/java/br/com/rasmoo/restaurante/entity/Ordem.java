@@ -3,6 +3,7 @@ package br.com.rasmoo.restaurante.entity;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -22,19 +23,27 @@ public class Ordem {
     @ManyToOne
     private Cliente cliente;
 
-    @ManyToMany
-    @JoinTable(
-            name = "ordens_cardapio",
-            joinColumns = @JoinColumn(name = "ordens_id"),
-            inverseJoinColumns = @JoinColumn(name = "cardapio_id")
-    )
-    private List<Cardapio> cardapioList;
+    /**
+     * ALL     = Realiza todas as operações em cascata
+     * DETACH  = Operação detach executada no pai e no filho
+     * MERGE   = Salva pai e filho, podendo já haver a entidade gerenciada
+     * PERSIST = Cria pai e filho
+     * REFRESH = Atualiza entidade com operações do banco
+     * REMOVE  = Propaga remoção entre pai e filho
+     */
+    @OneToMany(mappedBy = "ordem", cascade = CascadeType.ALL)
+    private List<OrdensCardapio> ordensCardapioList = new ArrayList<>();
 
     public Ordem() {
     }
 
     public Ordem(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    public void addOrdensCardapio(OrdensCardapio ordensCardapio) {
+        ordensCardapio.setOrdem(this);
+        this.ordensCardapioList.add(ordensCardapio);
     }
 
     public Integer getId() {
@@ -67,6 +76,14 @@ public class Ordem {
 
     public void setCliente(Cliente cliente) {
         this.cliente = cliente;
+    }
+
+    public List<OrdensCardapio> getOrdensCardapioList() {
+        return ordensCardapioList;
+    }
+
+    public void setOrdensCardapioList(List<OrdensCardapio> ordensCardapioList) {
+        this.ordensCardapioList = ordensCardapioList;
     }
 
     @Override

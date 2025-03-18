@@ -2,6 +2,7 @@ package br.com.rasmoo.restaurante.entity;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -12,15 +13,17 @@ public class Cliente {
     private String cpf;
 
     private String nome;
-    private String cep;
+
+    @ManyToOne
+    private Endereco endereco;
 
     public Cliente() {
     }
 
-    public Cliente(String cpf, String nome, String cep) {
+    public Cliente(String cpf, String nome, Endereco endereco) {
         this.cpf = cpf;
         this.nome = nome;
-        this.cep = cep;
+        this.endereco = endereco;
     }
 
     public String getCpf() {
@@ -39,12 +42,12 @@ public class Cliente {
         this.nome = nome;
     }
 
-    public String getCep() {
-        return cep;
+    public String getEndereco() {
+        return endereco;
     }
 
-    public void setCep(String cep) {
-        this.cep = cep;
+    public void setEndereco(String endereco) {
+        this.endereco = endereco;
     }
 
     @Override
@@ -52,7 +55,7 @@ public class Cliente {
         return "Cliente{" +
                 "cpf='" + cpf + '\'' +
                 ", nome='" + nome + '\'' +
-                ", cep='" + cep + '\'' +
+                ", cep='" + endereco + '\'' +
                 '}';
     }
 }
