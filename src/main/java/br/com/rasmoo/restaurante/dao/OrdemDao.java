@@ -5,7 +5,6 @@ import br.com.rasmoo.restaurante.vo.ItensPrincipaisVo;
 
 import javax.persistence.EntityManager;
 import java.util.List;
-import java.util.Objects;
 
 public class OrdemDao {
 
@@ -28,14 +27,24 @@ public class OrdemDao {
         return this.entityManager.createQuery(sql, Ordem.class).getResultList();
     }
 
-    public List<Object[]> consultarItensMaisVendidos() {
-        String sql = "SELECT c.nome, SUM(oc.quantidade) FROM Ordem o " +
+    public List<ItensPrincipaisVo> consultarItensMaisVendidos() {
+        String sql = "SELECT new br.com.rasmoo.restaurante.vo.ItensPrincipaisVo ( " +
+                "c.nome, SUM(oc.quantidade)) FROM Ordem o " +
                 "JOIN OrdensCardapio oc ON o.id = oc.cardapio.id " +
                 "JOIN oc.cardapio c " +
                 "GROUP BY c.nome " +
                 "ORDER BY SUM(oc.quantidade) DESC";
-        return this.entityManager.createQuery(sql, Object[].class).getResultList();
+        return this.entityManager.createQuery(sql, ItensPrincipaisVo.class).getResultList();
     }
+
+//    public List<Object[]> consultarItensMaisVendidos() {
+//        String sql = "SELECT c.nome, SUM(oc.quantidade) FROM Ordem o " +
+//                "JOIN OrdensCardapio oc ON o.id = oc.cardapio.id " +
+//                "JOIN oc.cardapio c " +
+//                "GROUP BY c.nome " +
+//                "ORDER BY SUM(oc.quantidade) DESC";
+//        return this.entityManager.createQuery(sql, Object[].class).getResultList();
+//    }
 
     public void atualizar(final Ordem ordem) {
         this.entityManager.merge(ordem);

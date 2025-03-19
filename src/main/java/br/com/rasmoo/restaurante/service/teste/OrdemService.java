@@ -24,8 +24,7 @@ public class OrdemService {
 
         OrdemDao ordemDao = new OrdemDao(entityManager);
 
-
-        ordemDao.consultarItensMaisVendidos().forEach(item->System.out.println("Item: "+item[0]+"\t-\tQuantidade: "+item[1]));
+        System.out.println(ordemDao.consultarItensMaisVendidos());
         entityManager.getTransaction().commit();
         entityManager.close();
     }
