@@ -16,18 +16,18 @@ public class Endereco {
     private String estado;
     private String cidade;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     private Cliente cliente;
 
     public Endereco() {
     }
-
-    public Endereco(String cep, String complemento, String rua, String estado, String cidade) {
+//                  "000000000","augusta","casa 43","Sao Paulo","SP"
+    public Endereco(String cep, String rua, String complemento, String cidade, String estado) {
         this.cep = cep;
-        this.complemento = complemento;
         this.rua = rua;
-        this.estado = estado;
+        this.complemento = complemento;
         this.cidade = cidade;
+        this.estado = estado;
     }
 
     public Integer getId() {
