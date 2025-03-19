@@ -14,7 +14,7 @@ public class CardapioService {
         EntityManager entityManager = JPAUtil.getEntityManagerCardapioLog();
         entityManager.getTransaction().begin();
 
-        CargaDeDadosUtil.cadastrarCategoria(entityManager);
+        CargaDeDadosUtil.cadastrarCategorias(entityManager);
         CargaDeDadosUtil.cadastrarProdutosCardapio(entityManager);
 
         CardapioDao cardapioDao = new CardapioDao(entityManager);

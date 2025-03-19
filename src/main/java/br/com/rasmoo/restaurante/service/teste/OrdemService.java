@@ -17,22 +17,15 @@ public class OrdemService {
     public static void main(String[] args) {
         EntityManager entityManager = JPAUtil.getEntityManagerCardapioLog();
         entityManager.getTransaction().begin();
-        CargaDeDadosUtil.cadastrarCategoria(entityManager);
+        CargaDeDadosUtil.cadastrarCategorias(entityManager);
         CargaDeDadosUtil.cadastrarProdutosCardapio(entityManager);
+        CargaDeDadosUtil.cadastrarClientes(entityManager);
+        CargaDeDadosUtil.cadastrarOrdensClientes(entityManager);
 
-        CardapioDao cardapioDao = new CardapioDao(entityManager);
-        ClienteDao clienteDao = new ClienteDao(entityManager);
         OrdemDao ordemDao = new OrdemDao(entityManager);
 
-        Endereco endereco = new Endereco("99.999-999", "Prox. Igreja católica", "Rua Projetada s/n", "ES", "Itapemirim");
-        Cliente siluana = new Cliente("999.999.999-99", "Siluana");
-        siluana.addEndereco(endereco);
-        Ordem ordem = new Ordem(siluana);
-        ordem.addOrdensCardapio(new OrdensCardapio(cardapioDao.consultarPorId(1), 2));
-        clienteDao.cadastrar(siluana);
-        ordemDao.cadastrar(ordem);
-        System.out.println(ordem);
 
+        ordemDao.consultarItensMaisVendidos().forEach(item->System.out.println("Item: "+item[0]+"\t-\tQuantidade: "+item[1]));
         entityManager.getTransaction().commit();
         entityManager.close();
     }
